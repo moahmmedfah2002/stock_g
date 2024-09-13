@@ -42,7 +42,14 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
-
+    .configureDevServerOptions(options => {
+                options.server = {
+                         type: 'https',
+                         options: {
+                             pfx: path.join(process.env.HOME, '.symfony5/certs/default.p12'),
+                             }
+                 }
+             })
     // configure Babel
     // .configureBabel((config) => {
     //     config.plugins.push('@babel/a-babel-plugin');
