@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+
+
+
+
+
+
+    <div class="mt-8 " style="margin-left :20% ">
+        <h4 class="text-gray-500" style="text-align: center">Tableau Matiére de base</h4>
+
+        <div class="flex flex-col mt-6">
+            <div class="-my-2 py-2 overflow-x-auto sm:-mx-5 sm:px-5  lg:-mx-6 lg:px-8">
+                <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                    <table class="min-w-full">
+                        <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Referance</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom du Matiere</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Categorie</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">zone preferentielle</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">quantité</th>
+                            {% if role =="achat" %}
+
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100">Supprimer</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+
+                        <tbody class="bg-white">
+
+
+                        {% for matiere in matieres %}
+                            <tr>
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                    {{ matiere.ref }}
+                                </th>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {{ matiere.nom }}
+                                </td>
+                                <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ matiere.categorie }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ matiere.type }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ matiere.zone }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ matiere.nombre }}
+                                </td>
+                                {% if role =="achat" %}
+
+                                <td style="padding: 2%;padding-left:65px ;">
+                                    <form method="get" action="/TableauMatiere/{{ matiere.id }}"> <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" >supprime</button></form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        <tr>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

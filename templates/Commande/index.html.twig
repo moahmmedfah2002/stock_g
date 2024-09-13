@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css">
+
+
+
+    <div class="mt-8 " style="margin-left :15% ">
+        <h4 class="text-gray-500" style="text-align: center">Tableau de commande</h4>
+
+        <div class="flex flex-col mt-6">
+            <div class="-my-2 py-2 overflow-x-auto sm:-mx-5 sm:px-5  lg:-mx-6 lg:px-8">
+                <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                    <table class="min-w-full">
+                        <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Numero Commande</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Referance</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom du commande</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Categorie</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">zone preferentielle</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">quantité</th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Statue</th>
+
+                            {% if role =="achat" %}
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100">Confirme livereson</th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100">Supprimer</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+
+                        <tbody class="bg-white">
+
+
+                        {% for commande in commandes %}
+                            <tr>
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                    {{ commande.numero }}
+                                </th>
+                                <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                    {{ commande.ref }}
+                                </th>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {{ commande.nom }}
+                                </td>
+                                <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ commande.categorie }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ commande.type }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ commande.zone }}
+                                </td>
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                    {{ commande.nombre }}
+                                </td>
+
+
+                                {% if   commande.statu ==false %}
+
+
+
+                                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                     <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-warning bg-warning-light rounded-lg">  En cours de liveraison </span>
+                                </td>
+                                     {% else %}
+                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                             <span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-success bg-success-light rounded-lg"> Livere </span>
+
+                                         </td>
+                                    {% endif %}
+
+                                {% if role =="achat" %}
+
+                                    <td style="padding: 2%;padding-left:20px ;">
+                                    {% if commande.statu==false %}
+                                        <form method="get" action="/confirmeLivreson/{{ commande.id }}"> <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-950 dark:focus:ring-offset-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" >confirme livereson</button></form>
+                                    {% endif %}
+                                    </td>
+
+                                    <td style="padding: 2%;padding-left:20px ;">
+                                        <form method="get" action="/deleteCommande/{{ commande.id }}"> <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" >supprime</button></form>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        <tr>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
